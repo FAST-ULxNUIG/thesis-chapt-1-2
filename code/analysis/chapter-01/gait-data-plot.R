@@ -16,6 +16,7 @@ plots_path <- here::here("figures")
 
 source(file.path(functions_path, "theme_gunning.R"))
 theme_gunning()
+theme_update(text = element_text(size = 10))
 
 
 # 3) Data Wrangling ----------------------------------------------------------
