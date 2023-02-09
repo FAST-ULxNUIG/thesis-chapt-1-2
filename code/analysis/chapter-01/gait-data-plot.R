@@ -69,7 +69,7 @@ head(gait_lng)
 
 # get colors
 set.seed(1996)
-my_pallette_39 <- createPalette(N = 39,seedcolors = c("#ff0000", "#00ff00", "#0000ff")) %>%
+my_pallette_39 <- createPalette(N = 39, seedcolors = c("#ff0000", "#00ff00", "#0000ff")) %>%
   as.vector
 
 # Plot the data:
@@ -92,8 +92,8 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "gait-data-plot.tex"),
-     width = 0.6 * doc_width_inches, 
-     height = 1 *  doc_width_inches)
+     width = 1 * doc_width_inches, 
+     height = 0.5 *  doc_width_inches)
 p1
 dev.off()
 
