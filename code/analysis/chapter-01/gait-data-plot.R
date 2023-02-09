@@ -16,7 +16,9 @@ plots_path <- here::here("figures")
 
 source(file.path(functions_path, "theme_gunning.R"))
 theme_gunning()
-theme_update(text = element_text(size = 10))
+theme_update(strip.text = element_text(size = 11),
+             axis.text = element_text(size = 10),
+             axis.title = element_text(size = 11))
 
 
 # 3) Data Wrangling ----------------------------------------------------------
