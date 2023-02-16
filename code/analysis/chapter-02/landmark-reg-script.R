@@ -200,7 +200,7 @@ r3 <- data.frame(time = eval_100, registered_eval) %>%
   scale_x_continuous(expand = c(0, 0), breaks = c(0, 0.25, 0.5, 0.75, 1),labels = c("0", "0.25", "0.5", "0.75", "1")) +
   scale_color_manual(values = my_pallette_12) +
   theme(legend.position = "none") +
-  labs(title = "Registered Data $x \\cdot h (t)$",
+  labs(title = "Registered Data $x \\circ h (t)$",
        x = "Normalised Time",
        y = "Angle ($^{\\circ}$)") +
   annotate(geom = "text", x = 0.34, y = 60, size = (5/ 14) * 9,
@@ -241,8 +241,8 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "landmark-reg-plot.tex"),
-     width = 1.35 * doc_width_inches, 
-     height = 1.3 *  doc_width_inches)
+     width = 1.3 * doc_width_inches, 
+     height = 1.25 *  doc_width_inches)
 comb_r
 dev.off()
 
