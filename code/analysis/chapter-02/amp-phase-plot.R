@@ -59,7 +59,7 @@ amp_phase_plot <- ggplot(amp_phase_data) +
   geom_line(inherit.aes = F, data = amp_phase_mean,
             aes(x = index, y =mean_fun), size = 1.5) +
   scale_x_continuous(expand = c(0, 0.05)) +
-  labs(y = "x(t)", x = "t") +
+  labs(y = "$x(t)$", x = "$t$") +
   theme(legend.position = "none")
 
 # View Plot
