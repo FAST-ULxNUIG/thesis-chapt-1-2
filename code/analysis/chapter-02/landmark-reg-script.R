@@ -241,8 +241,8 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "landmark-reg-plot.tex"),
-     width = 1.5 * doc_width_inches, 
-     height = 1.475 *  doc_width_inches)
+     width = 1.35 * doc_width_inches, 
+     height = 1.3 *  doc_width_inches)
 comb_r
 dev.off()
 
