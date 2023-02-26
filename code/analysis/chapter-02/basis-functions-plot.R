@@ -88,7 +88,7 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "basis-functions-plot.tex"),
-     width = 1 * doc_width_inches, 
+     width = 1.05 * doc_width_inches, 
      height = 0.5 *  doc_width_inches)
 p3
 dev.off()
