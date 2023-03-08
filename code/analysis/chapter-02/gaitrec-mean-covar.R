@@ -24,9 +24,12 @@ selected_sessions <- readRDS(file = file.path(data_path, "gaitrec-selected-sessi
 # -------------------------------------------------------------------------
 source(file.path(functions_path, "theme_gunning.R"))
 theme_gunning()
-# theme_update(axis.text = element_text(size = 10),
-#              axis.title = element_text(size = 12),
-#              strip.text = element_text(size = 12))
+theme_update(axis.text = element_text(size = 10),
+             axis.title = element_text(size = 12),
+             plot.title = element_text(size = 12),
+             legend.title = element_text(size = 12),
+             legend.text = element_text(size = 12),
+             strip.text = element_text(size = 12))
 # -------------------------------------------------------------------------
 
 # 7) Plots of the mean and Covariance Structure ---------------------------
@@ -86,8 +89,8 @@ co_var_plot <- co_var %>%
         legend.title = element_text(hjust = 0.5),
         legend.background = element_rect(color = "black"),
         legend.text = element_text(size = 10)) +
-  labs(title = "Covariance Function $\\widehat{C}(t_1, t_2)$",
-       fill = "$C(t_1, t_2)$")
+  labs(title = "Sample Covariance Function $\\widehat{C}(t_1, t_2)$",
+       fill = "$C(t_1, t_2)$", x= "$t_1$", y = "$t_2$")
 
 
 
@@ -133,6 +136,6 @@ doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "gaitrec-mean-covar.tex"),
      width = 1.5 * doc_width_inches, 
-     height = 0.5 *  doc_width_inches)
+     height = 0.75 *  doc_width_inches)
 mean_covar_plot
 dev.off()
