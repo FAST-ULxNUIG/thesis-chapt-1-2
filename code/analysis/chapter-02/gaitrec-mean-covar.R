@@ -52,7 +52,7 @@ co_var$s <- 0:100
 
 
 # set up function to inerpolate a color palette:
-getPalette = colorRampPalette(brewer.pal(n = 9, name = "YlOrRd"))
+getPalette = colorRampPalette(brewer.pal(n = 7, name = "YlOrRd"))
 
 # Plot of Covariance Function:
 # function to label breaks for the contour plot.
@@ -90,7 +90,7 @@ co_var_plot <- co_var %>%
         legend.background = element_rect(color = "black"),
         legend.text = element_text(size = 10)) +
   labs(title = "Sample Covariance Function $\\widehat{C}(t_1, t_2)$",
-       fill = "$C(t_1, t_2)$", x= "$t_1$", y = "$t_2$")
+       fill = "$\\widehat{C}(t_1, t_2)$", x= "$t_1$", y = "$t_2$")
 
 
 
@@ -135,7 +135,7 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "gaitrec-mean-covar.tex"),
-     width = 1.5 * doc_width_inches, 
-     height = 0.75 *  doc_width_inches)
+     width = 1.55 * doc_width_inches, 
+     height = 0.65 *  doc_width_inches)
 mean_covar_plot
 dev.off()
