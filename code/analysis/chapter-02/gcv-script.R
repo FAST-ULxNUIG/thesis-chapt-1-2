@@ -55,7 +55,7 @@ rich_basis <- create.bspline.basis(rangeval = range(gait_time), nbasis = 20)
 lambda_store <- matrix(data = NA, nrow = N_eval, ncol = length(lambdas))
 
 # set up names of clumn 
-colnames(lambda_store) <- paste0("$\\lambda = 10^", log10(lambdas), "$")
+colnames(lambda_store) <- paste0("$\\lambda = 10^{", log10(lambdas), "}$")
 
 
 gcv_store <- numeric(length = length(lambdas))
@@ -81,7 +81,7 @@ original_data <- data.frame(t = gait_time, x_true = gait_trial)
 ## Smoothes curves with varying lambda -------------------------------------
 g2 <- lambda_df %>%
   gather(-t, key = "lam_val", value = "xhat") %>%
-  mutate(lam_val = factor(lam_val, levels = paste0("$\\lambda = 10^", log10(lambdas), "$"))) %>%
+  mutate(lam_val = factor(lam_val, levels = paste0("$\\lambda = 10^{", log10(lambdas), "}$"))) %>%
   ggplot(aes(x = t, y = xhat, group = lam_val, color = lam_val)) +
   geom_point(data = original_data, inherit.aes = F, aes(x = t, y = x_true),
              size = 1, alpha = 0.6) + 
@@ -118,6 +118,7 @@ textbox_df2 <- data.frame(lab = "<span style='font-size:14pt; color:black'> Afte
 
 
 ## GCV plot --------------------------------------------------------------
+
 g1 <- ggplot(data = rich_lam_df) +
   aes(x = lam, y = gcv) +
   geom_line() +
@@ -125,19 +126,23 @@ g1 <- ggplot(data = rich_lam_df) +
                  aes(fill = label_rect),
                  expand = c(0.01), fill = "darkgrey",
                  color = "grey", linetype = 2, lwd = 1) +
-  geom_mark_rect(aes(fill = lam_val, filter = lam_val == "λ==10^-5"), data = lam_df, col = "#00B9E3",  fill = "#00B9E3", expand = 0.03) +
-  geom_point(data = lam_df, aes(color = lam_val), size = 4)+
+  geom_mark_rect(aes(fill = lam_val, filter = lam_val == "λ==10^-6"), data = lam_df, col = "#00BFC4",  fill = "#00BFC4", expand = 0.03) +
+  geom_point(data = lam_df, aes(color = lam_val), size = 2)+
   theme(legend.position = "none") +
   scale_y_continuous(limits = c(-2, 40), expand = c(0, 0)) +
   labs(title = "Generalised Cross Validation",
-       y = "GCV", x = "Smoothing Parameter $\\lambda$") +
+       y = "$\\text{GCV}(\\lambda)$", x = "Smoothing Parameter $\\lambda$") +
   scale_x_log10(expand = c(0.02, 0),
                 breaks = scales::trans_breaks("log10", function(x) 10^x),
-                labels = scales::trans_format("log10", scales::math_format(10^.x)))
+                labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+  geom_mark_rect(data = acceptable_range,
+                 aes(fill = label_rect), fill = "darkgrey", expand = c(0.025),
+                 color = "grey", linetype = 2, lwd = 1) 
+#+
   # geom_richtext(inherit.aes = F, aes(x =x, y = y, label = lab),
   #               data = textbox_df, fill = "lightgrey", alpha = 0.3, col = "darkgrey",
   #               label.padding = unit(0.7, "line")) +
-  # annotate("segment", x = 10^-6.5, xend = 10^-6.5, y = 11.5, yend = 3.5, col = "darkgrey", lwd = 0.75) +
+  # annotate("segment", x = 10^-6.5, xend = 10^-6.5, y = 11.5, yend = 3.5, col = "darkgrey", lwd = 0.75)
   # geom_richtext(inherit.aes = F, aes(x =x, y = y, label = lab),
   #               data = textbox_df2, fill = "white", alpha = 1, col = "#00B9E3", size = 4,
   #               label.padding = unit(0.65, "line")) +
@@ -153,8 +158,6 @@ g1
 (comb_gcv <- ggarrange(g2, g1, align = "hv"))
 
 
-## Save -----------------------------------------------------------------------
-ggsave(plot = comb_gcv, filename = "Figures/gcv.png", device = "png", units = "cm", width = 32, height = 15)
 
 tikz(file.path(plots_path, "gcv-plot.tex"),
      width = 1.5 * doc_width_inches, 
