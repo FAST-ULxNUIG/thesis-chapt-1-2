@@ -17,12 +17,13 @@ library(tikzDevice) # CRAN v0.12.3.1
 # 2) Settings -------------------------------------------------------------
 functions_path <- here::here("code", "functions")
 plots_path <- here::here("figures")
+theme_set(theme_bw())
 source(file.path(functions_path, "theme_gunning.R"))
-theme_update(axis.text = element_text(size = 12),
-             axis.title = element_text(size = 14),
+theme_update(axis.text = element_text(size = 11),
+             axis.title = element_text(size = 11),
              panel.grid.minor = element_blank(),
-             strip.text = element_text(size = 14),
-             plot.title = element_text(size = 16, hjust = 0.5),
+             strip.text = element_text(size = 11),
+             plot.title = element_text(size = 12, hjust = 0.5, face = "bold"),
              plot.subtitle = element_text(size = 11, hjust = 0.5),
              axis.ticks = element_blank(),
              strip.background = element_rect(size = 0.5))
@@ -156,8 +157,8 @@ g1
 ggsave(plot = comb_gcv, filename = "Figures/gcv.png", device = "png", units = "cm", width = 32, height = 15)
 
 tikz(file.path(plots_path, "gcv-plot.tex"),
-     width = 1.05 * doc_width_inches, 
-     height = 0.5 *  doc_width_inches)
+     width = 1.5 * doc_width_inches, 
+     height = 0.7 *  doc_width_inches)
 comb_gcv
 dev.off()
 
