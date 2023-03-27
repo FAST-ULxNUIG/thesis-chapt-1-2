@@ -143,7 +143,8 @@ p <- ggplot(data = raw_est) +
         # legend.position = c(0.2, 0.875),
         legend.position = "none",
         legend.background = element_rect(colour = "lightgrey"),
-        legend.text = element_text(size = 10)
+        legend.text = element_text(size = 10),
+        axis.title = element_text(size = 13)
         )
 
 p
