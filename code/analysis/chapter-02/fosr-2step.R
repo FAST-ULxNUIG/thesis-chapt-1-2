@@ -130,7 +130,7 @@ p <- ggplot(data = raw_est) +
   geom_line(data = smoothed_est, 
             mapping = aes(colour = col),
             lwd = 1.5) +
-  scale_color_manual(values = "red4", labels = "Smoothed coefficient function $\\widehat{\\upbeta} (t)$") +
+  scale_color_manual(values = "red4", labels = "Smoothed coefficient function $\\widehat{\\beta} (t)$") +
   ylab("$\\widehat{\\beta} (t)$") +
   xlab("$t$") +
   theme_bw() +
@@ -138,8 +138,10 @@ p <- ggplot(data = raw_est) +
   geom_text(mapping = aes(label = "$\\upbeta$")) +
   theme(legend.title = element_blank(),
         axis.text = element_blank(), 
+        panel.grid.minor = element_blank(),
         axis.ticks = element_blank(),
-        legend.position = c(0.2, 0.875),
+        # legend.position = c(0.2, 0.875),
+        legend.position = "none",
         legend.background = element_rect(colour = "lightgrey"),
         legend.text = element_text(size = 10)
         )
@@ -150,8 +152,8 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 
 tikz(file.path(plots_path, "fosr-2s.tex"),
-     width = (7/5) * doc_width_inches, 
-     height =  doc_width_inches)
+     width = 1 * doc_width_inches, 
+     height = (5/7) * doc_width_inches)
 p
 dev.off()
 
