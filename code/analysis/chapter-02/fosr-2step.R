@@ -9,12 +9,14 @@
 # ------------------------------------------------------------------------#
 
 # Packages used: ----------------------------------------------------------
-library(refund) # CRAN v0.1-24
-library(fda) # CRAN v5.5.1
-library(ggplot2) # [github::tidyverse/ggplot2] v3.3.5.9000
-
-
+library(refund)     # CRAN v0.1-24
+library(fda)        # CRAN v5.5.1
+library(ggplot2)    # [github::tidyverse/ggplot2] v3.3.5.9000
+library(tikzDevice) # CRAN v0.12.3.1 
+options(tikzLatexPackages = c(getOption( "tikzLatexPackages" ),"\\usepackage{upgreek}"))
 # Set up a reduced, weekly data set ---------------------------------------
+
+plots_path <- here::here("figures")
 
 # Reduced indices - sample every 365 days
 weekly_ind <- seq(1, 365, by = 7)
@@ -33,7 +35,7 @@ matplot(x = weekly_argvals,
 # Set up data for a regression --------------------------------------------
 
 tempmat <- t(weekly_temp)
-# Create design matrix. First is a column of 1's for intercept. 
+                    # Create design matrix. First is a column of 1's for intercept. 
 # binded to a column representing the centered lattitude:
 centered_lat <- scale(CanadianWeather$coord[ , 1],
                          center = TRUE, # centred!
@@ -79,7 +81,7 @@ X <- eval.basis(evalarg = weekly_argvals, basisobj = bspl_basis_fd)
 coef_argvals <- seq(min(weekly_argvals), max(weekly_argvals), length.out = 100)
 
 # estimate basis function coefficients using gam function and use REML estimation
-# create an fda object using the estimate coefficients
+                    # create an fda object using the estimate coefficients
 # and evaluate them on our fine grid:
 smoothed_est <- purrr::map_dfc(
   .x = raw_est,
@@ -117,20 +119,23 @@ smoothed_est$t <- coef_argvals
 raw_est$shape <- "Pointwise coefficient estimate"
 smoothed_est$col <- "Smoothed"
 
-ggplot(data = raw_est) +
+
+p <- ggplot(data = raw_est) +
   aes(x = t, y = beta_1) +
-  scale_shape_manual(values = "β") +
+  # scale_shape_manual(values = "β") +
+  # scale_shape_manual("h") +
   geom_rug(sides = "b") +
-  geom_line(col = "black", linewidth = 0.5, lty = 1) +
+  geom_line(col = "grey4", linewidth = 0.5, lty = 1, alpha = 0.75) +
   geom_point(col = "white", size = 3) +
   geom_line(data = smoothed_est, 
             mapping = aes(colour = col),
             lwd = 1.5) +
-  scale_color_manual(values = "red4", labels = "Smoothed coefficient function $\\widehat{\\beta} (t)$") +
+  scale_color_manual(values = "red4", labels = "Smoothed coefficient function $\\widehat{\\upbeta} (t)$") +
   ylab("$\\widehat{\\beta} (t)$") +
   xlab("$t$") +
   theme_bw() +
-  geom_point(mapping = aes(shape = shape), size = 4) +
+  # geom_point(mapping = aes(shape = shape), size = 4) +
+  geom_text(mapping = aes(label = "$\\upbeta$")) +
   theme(legend.title = element_blank(),
         axis.text = element_blank(), 
         axis.ticks = element_blank(),
@@ -139,6 +144,16 @@ ggplot(data = raw_est) +
         legend.text = element_text(size = 10)
         )
 
+p
+
+doc_width_cm <- 16
+doc_width_inches <- doc_width_cm *  0.3937
+
+tikz(file.path(plots_path, "fosr-2s.tex"),
+     width = (7/5) * doc_width_inches, 
+     height =  doc_width_inches)
+p
+dev.off()
 
 ggsave(filename = here::here("Figures/fosr-2-step.png"), device = "png", width = 7, height = 5, dpi = "retina")
            
