@@ -131,7 +131,7 @@ g1 <- ggplot(data = rich_lam_df) +
   theme(legend.position = "none") +
   scale_y_continuous(limits = c(-2, 40), expand = c(0, 0)) +
   labs(title = "Generalised Cross Validation",
-       y = "$\\text{GCV}(\\lambda)$", x = "Smoothing Parameter $\\lambda$") +
+       y = "GCV$(\\lambda)$", x = "Smoothing Parameter $\\lambda$") +
   scale_x_log10(expand = c(0.02, 0),
                 breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
