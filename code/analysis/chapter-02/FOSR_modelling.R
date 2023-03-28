@@ -22,6 +22,8 @@ doc_width_cm <- 16
 doc_width_inches <- doc_width_cm *  0.3937
 plots_path <- here::here("figures")
 
+select <- dplyr::select
+
 # Read in data from the extraction script.
 # This should take a long time.
 source("code/analysis/chapter-02/FOSR_data_extraction.R") # be prepared to wait.
@@ -274,17 +276,17 @@ coefficients_plot <- inner_join(params_long, lower_long, by = c("time_seq", "con
   inner_join(upper_long, by = c("time_seq", "condition")) %>%
   mutate(condition = factor(condition,
                             levels =  c("Overall.Mean", "Healthy.Control", "Ankle", "Knee", "Hip", "Calcaneus"),
-                            labels = c(expression(beta[0](t)~" Overall Mean"),
-                                       expression(beta[1](t)~" Healthy Control"),
-                                       expression(beta[2](t)~" Ankle"),
-                                       expression(beta[3](t)~" Knee"),
-                                       expression(beta[4](t)~" Hip"),
-                                       expression(beta[5](t)~" Calcaneus")))) %>%
+                            labels = c("$\\beta_0 (t)$ Overall Mean",
+                                       "$\\beta_1 (t)$ Healthy Control",
+                                       "$\\beta_2 (t)$ Ankle",
+                                       "$\\beta_3 (t)$ Knee",
+                                       "$\\beta_4 (t)$ Hip",
+                                       "$\\beta_5 (t)$ Calcaneus"))) %>%
   ggplot() +
   aes(x = time_seq, color = condition) +
-  facet_wrap(~ condition, scales = "free", labeller = label_parsed) +
+  facet_wrap(~ condition, scales = "free") +
   geom_hline(yintercept = 0, col = "grey") +
-  geom_line(aes(y = parameter_ests)) +
+  geom_line(aes(y = point_est)) +
   geom_line(aes(y = upper), lty = "dashed", lwd = 0.7)+
   geom_line(aes(y = lower), lty = "dashed", lwd = 0.7) +
   geom_point(data = . %>% filter(as.numeric(condition) != 1), # TRICK :-)
@@ -293,12 +295,19 @@ coefficients_plot <- inner_join(params_long, lower_long, by = c("time_seq", "con
              inherit.aes = F, aes(x = 50, y = 0.15), color = NA) +
   scale_color_manual(values = c("black", hue_pal()(5))) +
   theme(legend.position = "none") +
-  labs(x = "Normalised Time", y = "Parameter Estimate")
+  labs(x ="Normalised Time ($\\%$ of Gait Cycle)", y = "$\\widehat{\\beta} (t)$")
 #Look at plot
 coefficients_plot
 
-ggsave(plot = coefficients_plot, filename = "Figures/FLM_coefficients.png",
-       device = "png", units = "cm", width = 20, height = 14)
+
+tikz(file.path(plots_path, "fosr-coefs.tex"),
+     width = 1 * doc_width_inches, 
+     height = (2.1/3) *  doc_width_inches)
+coefficients_plot
+dev.off()
+
+# ggsave(plot = coefficients_plot, filename = "Figures/FLM_coefficients.png",
+#        device = "png", units = "cm", width = 20, height = 14)
 
 # ignore warnings.
 
