@@ -32,6 +32,7 @@ theme_set(new = theme_bw())
 theme_update(axis.text = element_text(size = 11),
              axis.title = element_text(size = 11),
              strip.text = element_text(size = 11),
+             panel.grid.minor = element_blank(),
              plot.title = element_text(size = 11, hjust = 0.5),
              plot.subtitle = element_text(size = 11, hjust = 0.5),
              axis.ticks = element_blank(),
@@ -114,7 +115,7 @@ factor_plot
 
 tikz(file.path(plots_path, "fosr-dataset.tex"),
      width = 1 * doc_width_inches, 
-     height = (2.2/3) *  doc_width_inches)
+     height = (2.1/3) *  doc_width_inches)
 factor_plot
 dev.off()
 
