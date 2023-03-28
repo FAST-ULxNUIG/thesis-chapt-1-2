@@ -114,7 +114,7 @@ factor_plot
 
 tikz(file.path(plots_path, "fosr-dataset.tex"),
      width = 1 * doc_width_inches, 
-     height = (2/3) *  doc_width_inches)
+     height = (2.2/3) *  doc_width_inches)
 factor_plot
 dev.off()
 
