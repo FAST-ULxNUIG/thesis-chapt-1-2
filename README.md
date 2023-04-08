@@ -6,7 +6,7 @@ Edward Gunning Thesis Chapter 1 and 2
 This repository contains the code for the Edward Gunning’s thesis
 Chapters 1 and 2.
 
-- The $\textsf{R}$ codes to generate the example and create the figures
+- The $\textsf{R}$ codes to generate the examples and create the figures
   are contained in the [code](code) folder :open_file_folder:.
 
 - The figures are generated as .TeX files using the R package
