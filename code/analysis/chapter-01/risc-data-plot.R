@@ -40,7 +40,7 @@ p <- ggplot(data = risc1_plot_dt_lng) +
 
 
 tikz(file.path(plots_path, "risc-data-plot.tex"),
-     width = 1.5 * doc_width_inches, 
-     height = 0.7 *  doc_width_inches)
+     width = 1 * doc_width_inches, 
+     height = 1 *  doc_width_inches)
 p
 dev.off()
