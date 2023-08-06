@@ -7,10 +7,10 @@ This repository contains the code for Edward Gunning’s Ph.D. thesis
 Chapters 1 and 2.
 
 - The $\textsf{R}$ code to generate the examples and create the figures
-  are contained in [code :open_file_folder:](code).
+  are contained in [code :open_file_folder:](code/).
 
 - The figures are generated as TeX files using the R package
-  `{tikzDevice}` and stored in [figures :open_file_folder:](figures).
+  `{tikzDevice}` and stored in [figures :open_file_folder:](figures/).
   The file [figures.tex](figures/figures.tex) file :page_facing_up:
   compiles them from .tex to .pdf.
 
